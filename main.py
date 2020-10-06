@@ -109,7 +109,7 @@ def mkcsv(argv):
 if __name__ == '__main__':
     # Create the parser.
     mkcsv_parser = argparse.ArgumentParser(
-        description="Generate random CSV files for performance testing."
+        description="Generate random CSVs."
     )
 
     # Add arguments
@@ -145,7 +145,7 @@ if __name__ == '__main__':
         nargs='+',
         required=False,
         default=['int'],
-        help='Data types present in the desired CSV file. Supported data types are: str, int, float'
+        help='Data types present in the desired CSV file. Supported data types are: str, int, float.'
     )
     mkcsv_parser.add_argument(
         '--nan-values',
@@ -163,7 +163,7 @@ if __name__ == '__main__':
         type=float,
         required=False,
         default=.0,
-        help='Frequency of Empty (None) values contained in desired CSV file.'
+        help='Frequency of empty values contained in desired CSV file.'
     )
     mkcsv_parser.add_argument(
         '--index',
