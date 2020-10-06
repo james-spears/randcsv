@@ -10,7 +10,7 @@ from math import nan
 class DataType(Enum):
     string = 'str'
     integer = 'int'
-    float = 'float'
+    floating_point = 'float'
 
     def __str__(self):
         return self.value
@@ -32,7 +32,7 @@ def random_string():
 def value_factory(data_type):
     if data_type == DataType.string.value:
         return random_string()
-    elif data_type == DataType.float.value:
+    elif data_type == DataType.floating_point.value:
         return random_float()
     elif data_type == DataType.integer.value:
         return random_integer()
@@ -43,18 +43,6 @@ def value_factory(data_type):
 
 
 def random_value(all_values_sorted, data_types):
-    # # make sure frequencies are valid
-    # if nan_values < .0 or nan_values > 1.:
-    #     raise ValueError("--nan-values <nan-values> must be [0, 1]")
-    # if empty_values < .0 or empty_values > 1.:
-    #     raise ValueError("--empty-values <empty-values> must be [0, 1]")
-    # if nan_values + empty_values > 1.:
-    #     raise ValueError("--empty-values <empty-values> + --nan-values <nan-values> must be [0, 1]")
-    #
-    # regular_values = 1 - nan_values - empty_values
-    # all_values = [(0, regular_values), (1, nan_values), (2, empty_values)]
-    # all_values_sorted = sorted(all_values, key=itemgetter(1))
-
     random_number = random()
     left_boundary = 0
     for item in all_values_sorted:
