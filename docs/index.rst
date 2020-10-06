@@ -10,7 +10,14 @@ Welcome to RandCSV's documentation!
    :maxdepth: 2
    :caption: Contents:
 
+.. automodule:: randcsv.main
+    :members:
 
+.. automodule:: randcsv.data_type
+    :members:
+
+.. automodule:: randcsv.value_generators
+    :members:
 
 Indices and tables
 ==================

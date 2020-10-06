@@ -20,7 +20,7 @@ release = '0.0.0'
 # -- Project information -----------------------------------------------------
 
 project = 'RandCSV'
-copyright = '2020, James W. Spears'
+copyright = '2020, The ScriptLoom authors'
 author = 'James W. Spears'
 
 
