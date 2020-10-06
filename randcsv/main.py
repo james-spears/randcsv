@@ -39,7 +39,7 @@ def generate_float(num_of_decimal_places):
     :return: random float
     :rtype: float
     """
-    float_string_format = f"{{:.{num_of_decimal_places}f}}"
+    float_string_format = f"{{:.{num_of_decimal_places - 2}f}}"
     return float_string_format.format(random())
 
 
@@ -72,7 +72,7 @@ def generator_factory(data_type):
         return generate_integer
     else:
         raise ValueError(
-            "Data type must be one of: str, int, float."
+            "data type must be one of: str, int, float"
         )
 
 
@@ -109,7 +109,7 @@ def generate_value(all_value_types_sorted, data_types, value_length):
             else:
                 # this must be an empty value
                 raise ValueError(
-                    'Value must be either NaN, "empty", or a valid data type (regular value).'
+                    'value must be either NaN, "empty", or a valid data type (regular value)'
                 )
         else:
             left_boundary = right_boundary
@@ -122,12 +122,14 @@ def mkcsv(argv):
         raise ValueError("--empty-values <empty-values> must be [0, 1]")
     if argv.nan_values + argv.empty_values > 1.:
         raise ValueError("--empty-values <empty-values> + --nan-values <nan-values> must be [0, 1]")
+    if argv.value_length <= 0:
+        raise ValueError("--value-length must be positive")
 
     regular_values = 1 - argv.nan_values - argv.empty_values
     all_value_types = [(0, regular_values), (1, argv.nan_values), (2, argv.empty_values)]
     all_value_types_sorted = sorted(all_value_types, key=itemgetter(1))
 
-    with open(f'{argv.output}.csv', 'w+', newline='') as csvfile:
+    with open(argv.output, 'w+', newline='') as csvfile:
         csvwriter = csv.writer(csvfile, delimiter=',', quotechar='|', quoting=csv.QUOTE_MINIMAL)
         for row in range(argv.rows):
             if row == 0 and argv.title:
@@ -140,7 +142,7 @@ def mkcsv(argv):
                     csvwriter.writerow(
                         [generate_value(all_value_types_sorted, argv.data_types, argv.value_length) for _ in range(argv.cols)])
 
-    print(f'mkcsv generated file: {argv.output}.csv')
+    print(f'mkcsv generated file: {argv.output}')
 
 
 if __name__ == '__main__':
