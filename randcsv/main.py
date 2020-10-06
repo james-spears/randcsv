@@ -16,38 +16,38 @@ class DataType(Enum):
         return self.value
 
 
-def random_integer():
+def generate_integer():
     return str(randint(100000, 999999))
 
 
-def random_float():
+def generate_float():
     return "{:.5f}".format(random())
 
 
-def random_string():
+def generate_string():
     letters = string.ascii_letters
     return ''.join(choice(letters) for _ in range(6))
 
 
 def value_factory(data_type):
     if data_type == DataType.string.value:
-        return random_string()
+        return generate_string()
     elif data_type == DataType.floating_point.value:
-        return random_float()
+        return generate_float()
     elif data_type == DataType.integer.value:
-        return random_integer()
+        return generate_integer()
     else:
         raise ValueError(
             "Data type must be one of: str, int, float"
         )
 
 
-def random_value(all_values_sorted, data_types):
-    random_number = random()
+def generate_value(all_values_sorted, data_types):
+    generate_number = random()
     left_boundary = 0
     for item in all_values_sorted:
         right_boundary = item[1]
-        if left_boundary <= random_number < right_boundary:
+        if left_boundary <= generate_number < right_boundary:
             if item[0] == 0:
                 # this is a regular number, so randomly select one
                 num_of_data_types = len(data_types)
@@ -85,11 +85,11 @@ def mkcsv(argv):
                 csvwriter.writerow([str(col) for col in range(argv.cols)])
             else:
                 if argv.index:
-                    csvwriter.writerow([str(row)] + [random_value(all_values_sorted, argv.data_types)
+                    csvwriter.writerow([str(row)] + [generate_value(all_values_sorted, argv.data_types)
                                                      for _ in range(1, argv.cols)])
                 else:
                     csvwriter.writerow(
-                        [random_value(all_values_sorted, argv.data_types) for _ in range(argv.cols)])
+                        [generate_value(all_values_sorted, argv.data_types) for _ in range(argv.cols)])
 
     print(f'mkcsv generated file: {argv.output}.csv')  # Press Ctrl+F8 to toggle the breakpoint.
 
