@@ -1,4 +1,4 @@
-# randcsv
+# RandCSV
 
 Generate random CSVs.
 
@@ -65,22 +65,22 @@ The randcsv command line tool makes available the following configuration parame
 
 ***N.B. All commands are available via long-hand and short-hand flags. So-called long-hand flags begin with two (2) hyphens `--` and short-hand flags begin with one (1) hyphen `-`.***
 
-* `--rows`, `-m` (Required)
+* `--rows`, `-m` Integer (Required)
   * Number of rows the desired CSV file contains.
 
-* `--cols`, `n`(Required)
+* `--cols`, `n` Integer (Required)
   * Number of columns the desired CSV file contains.
 
-* `--output`, `-o` (Optional. Default: `--output test.csv`)
+* `--output`, `-o` String (Optional. Default: `--output test.csv`)
   * Output file name.
 
-* `--data-types`, `-d` (Optional. Default: `0.0`)
+* `--data-types`, `-d` List (Optional. Default: `0.0`)
   * Data types present in the desired CSV file. Supported data types are: str, int, float. This argument accepts multiple values. Example: `--data-types str int float`. If more than one data type is provided, the logic randomly selects one of the provided data types on a per-value basis.
 
-* `--nan-values`, `-a` (Optional. Default: `--nan-values 0.0`)
+* `--nan-values`, `-a` Float (Optional. Default: `--nan-values 0.0`)
   * Frequency of NaN values contained in desired CSV file. Example: `--nan-values 0.25`, implies 25% of all the values in the CSV file will be `nan`.
 
-* `--empty-values`, `-e` (Optional. Default: `--empty-values 0.0`)
+* `--empty-values`, `-e` Float (Optional. Default: `--empty-values 0.0`)
   * Frequency of empty values contained in desired CSV file. Example: `--empty-values 0.25`, implies 25% of all the values in the CSV file will be `` (no value).
 
 * `--index`, `-i` Boolean (Optional. Default: False)
@@ -88,3 +88,6 @@ The randcsv command line tool makes available the following configuration parame
 
 * `--title`, `-t` Boolean (Optional. Default: False)
   * Flag signaling whether the top most row should be a column index (ascending integer).
+
+* `--value-length`, `-l` Integer (Optional. Default: 6)
+  * Character length of the individual random values.
