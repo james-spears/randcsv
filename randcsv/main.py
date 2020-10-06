@@ -226,6 +226,6 @@ if __name__ == '__main__':
         type=int,
         required=False,
         default=6,
-        help='Length of the random values.'
+        help='Character length of the individual random values.'
     )
     mkcsv(args)
