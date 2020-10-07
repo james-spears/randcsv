@@ -5,3 +5,7 @@ docs/_*
 build
 randcsv_*
 dist
+main.py
+.coverage
+coverage_html_report
+rand.csv

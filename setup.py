@@ -4,16 +4,16 @@ with open("README.md", "r") as fh:
     long_description = fh.read()
 
 setuptools.setup(
-    name="randcsv-jameone", # Replace with your own username
-    version="0.0.0",
+    name="randcsv-jameone",
+    version="0.0.2",
     author="James W. Spears",
-    author_email="james.w.spears@example.com",
-    description="Generate random CSVs.",
+    author_email="james.w.spears@gmail.com",
+    description="Generate cryptographically secure random CSVs.",
     long_description=long_description,
     long_description_content_type="text/markdown",
     url="https://github.com/scriptloom/randcsv",
     packages=setuptools.find_packages(),
-    entry_points={"console_scripts": ["randcsv=randcsv.main:main"]},
+    entry_points={"console_scripts": ["randcsv=randcsv.cli:cli"]},
     classifiers=[
         "Programming Language :: Python :: 3",
         "License :: OSI Approved :: MIT License",

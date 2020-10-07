@@ -1,9 +1,9 @@
 from __future__ import print_function
 import argparse
-from . import random_csv
+from .random_csv import RandomCSV
 
 
-def cli():
+def parse_args(args):
     """CLI entry point.
     """
     # Create the parser.
@@ -34,7 +34,7 @@ def cli():
         action='store',
         type=str,
         required=False,
-        default="test",
+        default="rand.csv",
         help='Output file name. A ".csv" file extension will be appended to this value.'
     )
     mkcsv_parser.add_argument(
@@ -43,7 +43,7 @@ def cli():
         action='store',
         nargs='+',
         required=False,
-        default=['int'],
+        default=['integer'],
         help='Data types present in the desired CSV file. Supported data types are: str, int, float.'
     )
     mkcsv_parser.add_argument(
@@ -81,19 +81,27 @@ def cli():
     )
     mkcsv_parser.set_defaults(title=False)
     mkcsv_parser.add_argument(
-        '--value-length',
-        '-l',
+        '--byte-size',
+        '-b',
         action='store',
         type=int,
         required=False,
-        default=6,
+        default=8,
         help='Character length of the individual random values.'
     )
-    args = mkcsv_parser.parse_args()
-    csv = random_csv.RandomCSV(
+    return mkcsv_parser.parse_args(args)
+
+
+def cli(args):
+    """
+
+    :param args:
+    :return:
+    """
+    csv = RandomCSV(
         rows=args.rows,
         cols=args.cols,
-        value_length=args.value_length,
+        byte_size=args.byte_size,
         data_types=args.data_types,
         nan_freq=args.nan_freq,
         empty_freq=args.empty_freq,
@@ -102,7 +110,3 @@ def cli():
         )
     csv.to_file(args.output)
     print(f'generated CSV file: {args.output}')
-
-
-if __name__ == '__main__':
-    cli()

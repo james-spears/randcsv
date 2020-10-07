@@ -15,7 +15,8 @@ Where the purpose of 2) is easier integration of randcsv and automated testing s
 
 ### Installation
 
-The recommended way to install the randcsv CLI is using `pipx` which requires Python version `>=3.6`. A step-by-step installation is shown here (performed on Ubuntu 20.04).
+The recommended way to install the randcsv CLI is using `pipx` which requires Python version `>=3.6`.
+A step-by-step installation is shown here (performed on Ubuntu 20.04).
 
 1) Install `pipx` using `pip`.
 
@@ -89,5 +90,6 @@ The randcsv command line tool makes available the following configuration parame
 * `--title`, `-t` Boolean (Optional. Default: False)
   * Flag signaling whether the top most row should be a column index (ascending integer).
 
-* `--value-length`, `-l` Integer (Optional. Default: 6)
-  * Character length of the individual random values.
+* `--byte-size`, `-b` Integer (Optional. Default: 8)
+  * Number of bytes used to generate the random values. Increasing the byte size will
+  increase the size of the set of possible random values.
