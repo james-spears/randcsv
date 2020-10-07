@@ -2,7 +2,7 @@ import string
 from math import nan
 from random import randint, random, choice
 
-from randcsv import data_type as dt
+from . import data_type as dt
 
 def generate_integer(num_of_digits):
     """Generates a random integer of arbitrary size.

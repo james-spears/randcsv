@@ -19,6 +19,10 @@ Welcome to RandCSV's documentation!
 .. automodule:: randcsv.value_generators
     :members:
 
+.. automodule:: randcsv.random_csv
+    :members:
+
+
 Indices and tables
 ==================
 

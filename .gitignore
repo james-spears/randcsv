@@ -2,3 +2,6 @@
 .vscode
 **/__pycache__
 docs/_*
+build
+randcsv_*
+dist
