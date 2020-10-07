@@ -1,9 +1,9 @@
 import os
 import unittest
-from randcsv import RandomCSV
+from randcsv import RandCSV
 
 
-class TestRandomCSV(unittest.TestCase):
+class TestRandCSV(unittest.TestCase):
 
     test_file = os.path.join(os.path.dirname(os.path.dirname(__file__)), "rand.csv")
 
@@ -20,21 +20,21 @@ class TestRandomCSV(unittest.TestCase):
             pass
 
     def test_random_csv(self):
-        csv = RandomCSV(4, 3)
+        csv = RandCSV(4, 3)
         csv.to_file('rand.csv')
         self.assertTrue(csv.rows, 4)
         self.assertTrue(csv.cols, 3)
         self.assertTrue(os.path.exists(self.test_file))
 
     def test_random_csv_with_title(self):
-        csv = RandomCSV(4, 3, title_row=True)
+        csv = RandCSV(4, 3, title_row=True)
         csv.to_file('rand.csv')
         self.assertTrue(csv.rows, 4)
         self.assertTrue(csv.cols, 3)
         self.assertTrue(os.path.exists(self.test_file))
 
     def test_random_csv_with_index(self):
-        csv = RandomCSV(4, 3, index_col=True)
+        csv = RandCSV(4, 3, index_col=True)
         csv.to_file('rand.csv')
         self.assertTrue(csv.rows, 4)
         self.assertTrue(csv.cols, 3)
@@ -42,13 +42,13 @@ class TestRandomCSV(unittest.TestCase):
 
     def test_raises(self):
         with self.assertRaises(ValueError):
-            RandomCSV(4, 3, nan_freq=1.2)
+            RandCSV(4, 3, nan_freq=1.2)
 
         with self.assertRaises(ValueError):
-            RandomCSV(4, 3, empty_freq=1.2)
+            RandCSV(4, 3, empty_freq=1.2)
 
         with self.assertRaises(ValueError):
-            RandomCSV(4, 3, byte_size=-1)
+            RandCSV(4, 3, byte_size=-1)
 
         with self.assertRaises(ValueError):
-            RandomCSV(4, 3, nan_freq=0.4, empty_freq=0.7)
+            RandCSV(4, 3, nan_freq=0.4, empty_freq=0.7)

@@ -86,8 +86,6 @@ class TestGenerateValue(unittest.TestCase):
 
     def test_generator_raised(self):
         all_value_types_sorted = [
-            (0, 0.2),
-            (1, 0.3),
             (3, 0.5),
         ]
         data_types = ["toke"]

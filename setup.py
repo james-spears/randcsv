@@ -5,10 +5,10 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="randcsv-jameone",
-    version="0.0.2",
+    version="0.0.3",
     author="James W. Spears",
     author_email="james.w.spears@gmail.com",
-    description="Generate cryptographically secure random CSVs.",
+    description="Generate random CSVs.",
     long_description=long_description,
     long_description_content_type="text/markdown",
     url="https://github.com/scriptloom/randcsv",

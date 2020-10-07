@@ -1,6 +1,6 @@
 from __future__ import print_function
 import argparse
-from .random_csv import RandomCSV
+from .random_csv import RandCSV
 
 
 def parse_args(args):
@@ -98,7 +98,7 @@ def cli(args):
     :param args:
     :return:
     """
-    csv = RandomCSV(
+    csv = RandCSV(
         rows=args.rows,
         cols=args.cols,
         byte_size=args.byte_size,

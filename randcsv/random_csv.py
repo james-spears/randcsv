@@ -4,7 +4,8 @@ from operator import itemgetter
 from . import value_generators as vg
 from . import data_type as dt
 
-class RandomCSV:
+
+class RandCSV:
     """
     All of the arguments (meta data) required to initialize randcsv.
     """
@@ -12,7 +13,7 @@ class RandomCSV:
         self,
         rows,
         cols,
-        byte_size=6,
+        byte_size=8,
         data_types=None,
         nan_freq=.0,
         empty_freq=.0,
