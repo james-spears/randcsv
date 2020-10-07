@@ -12,8 +12,11 @@ jobs:
       - python/install-deps
       - python/save-cache
       - run:
-          command: ./manage.py test
+          command: coverage run -m unittest
           name: Test
+      - run:
+          command: coverage html
+          name: Generate Coverage
 
 workflows:
   main:
