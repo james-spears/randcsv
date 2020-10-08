@@ -42,9 +42,9 @@ The package is publicly hosted on PyPI under the name `randcsv`; you can install
 ```text
 $ pip install randcsv
 Collecting randcsv
-  Downloading randcsv-0.1.2-py3-none-any.whl (10 kB)
+  Downloading randcsv-0.1.3-py3-none-any.whl (10 kB)
 Installing collected packages: randcsv
-Successfully installed randcsv-0.1.2
+Successfully installed randcsv-0.1.3
 ```
 
 ### API
@@ -54,13 +54,13 @@ The `randcsv` API consists of a single class definition, `RandCSV`. Example usag
 ```python
 from randcsv import RandCSV
 
-# Make a 4 x 3 CSV with title and index.
+# Make a 10 x 4 CSV with title and index.
 #
 # Use all available data types: integer,
 # token, and float.
 #
-# 10% NaN values, 15% empty values (implies 75% 
-# randomly distributed "regular" values).
+# Approx. 10% NaN values, 15% empty values (implies
+# approx. 75% randomly distributed "regular" values).
 
 data = RandCSV(
     10,
@@ -76,7 +76,7 @@ data = RandCSV(
 # The data.data property would then contain a list of random
 # value lists, where the shape of data.data would be: 10 x 4.
 
-# Save the CSV to a file `output.csv`
+# Save the CSV to a file `example.csv`
 data.to_file('example.csv')
 ```
 
@@ -156,7 +156,7 @@ Otherwise pipx is ready to go! ✨ 🌟 ✨
 
 ```text
 $ pipx install randcsv
-  installed package randcsv 0.1.2, Python 3.8.3
+  installed package randcsv 0.1.3, Python 3.8.3
   These apps are now globally available
     - randcsv
 done! ✨ 🌟 ✨
@@ -179,7 +179,7 @@ flags begin with two (2) hyphens `--` and short-hand flags begin with one (1) hy
   * Output file name.
 
 * `--data-types`, `-d` List (Optional. Default: `--data-types integer`)
-  * Data types present in the desired CSV file. Supported data types are: str, int, float.
+  * Data types present in the desired CSV file. Supported data types are: token, integer, float.
   This argument accepts multiple values. Example: `--data-types float integer token`, or any
   combination thereof. If more than one data type is provided, the logic randomly selects one
   of the provided data types on a per-value basis.

@@ -35,7 +35,7 @@ def parse_args(*args):
         type=str,
         required=False,
         default="rand.csv",
-        help='Output file name. A ".csv" file extension will be appended to this value.'
+        help='Output file name.'
     )
     mkcsv_parser.add_argument(
         '--data-types',
@@ -44,7 +44,7 @@ def parse_args(*args):
         nargs='+',
         required=False,
         default=['integer'],
-        help='Data types present in the desired CSV file. Supported data types are: str, int, float.'
+        help='Data types present in the desired CSV file. Supported data types are: integer, float, token.'
     )
     mkcsv_parser.add_argument(
         '--nan-freq',
@@ -53,7 +53,7 @@ def parse_args(*args):
         type=float,
         required=False,
         default=.0,
-        help='Frequency of NaN values contained in desired CSV file.'
+        help='Approx. frequency of NaN values contained in desired CSV file.'
     )
     mkcsv_parser.add_argument(
         '--empty-freq',
@@ -62,14 +62,14 @@ def parse_args(*args):
         type=float,
         required=False,
         default=.0,
-        help='Frequency of empty values contained in desired CSV file.'
+        help='Approx. frequency of empty values contained in desired CSV file.'
     )
     mkcsv_parser.add_argument(
         '--index-col',
         '-i',
         action='store_true',
         dest='index_col',
-        help='Flag signaling whether the left most column should be a row index (ascending integer).'
+        help='Flag, the left most column should be a row index (ascending integer).'
     )
     mkcsv_parser.set_defaults(index=False)
     mkcsv_parser.add_argument(
@@ -77,7 +77,7 @@ def parse_args(*args):
         '-t',
         action='store_true',
         dest='title_row',
-        help='Flag signaling whether the top most row should be a column index (ascending integer).'
+        help='Flag, the top most row should be a column index (ascending integer).'
     )
     mkcsv_parser.set_defaults(title=False)
     mkcsv_parser.add_argument(
