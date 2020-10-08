@@ -73,6 +73,9 @@ data = RandCSV(
     title_row=True,
 )
 
+# The data.data property would then contain a list of random
+# value lists having shape: 10 x 4.
+
 # Save the CSV to a file `output.csv`
 data.to_file('example.csv')
 ```
