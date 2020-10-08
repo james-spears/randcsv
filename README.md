@@ -177,9 +177,9 @@ flags begin with two (2) hyphens `--` and short-hand flags begin with one (1) hy
 
 * `--data-types`, `-d` List (Optional. Default: `0.0`)
   * Data types present in the desired CSV file. Supported data types are: str, int, float.
-  This argument accepts multiple values. Example: `--data-types str int float`. If more than
-  one data type is provided, the logic randomly selects one of the provided data types on a
-  per-value basis.
+  This argument accepts multiple values. Example: `--data-types float integer token`, or any
+  combination thereof. If more than one data type is provided, the logic randomly selects one
+  of the provided data types on a per-value basis.
 
 * `--nan-freq`, `-a` Float (Optional. Default: `--nan-freq 0.0`)
   * Frequency of NaN values contained in desired CSV file. Example: `--nan-freq 0.25`, implies
