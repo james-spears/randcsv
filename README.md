@@ -74,7 +74,7 @@ data = RandCSV(
 )
 
 # The data.data property would then contain a list of random
-# value lists having shape: 10 x 4.
+# value lists, where the shape of data.data would be: 10 x 4.
 
 # Save the CSV to a file `output.csv`
 data.to_file('example.csv')
