@@ -3,8 +3,8 @@ import argparse
 from .random_csv import RandCSV
 
 
-def parse_args():
-    """CLI entry point.
+def parse_args(*args):
+    """Argument parser.
     """
     # Create the parser.
     mkcsv_parser = argparse.ArgumentParser(
@@ -89,16 +89,21 @@ def parse_args():
         default=8,
         help='Character length of the individual random values.'
     )
+
+    if args is not None:
+        return mkcsv_parser.parse_args(*args)
+    # pipx returns here
     return mkcsv_parser.parse_args()
 
 
-def cli():
+def cli(args=None):
+    """CLI entry point.
     """
-
-    :param args:
-    :return:
-    """
-    args = parse_args()
+    if args is not None:
+        args = parse_args(args)
+    else:
+        # pipx returns here
+        args = parse_args()
     csv = RandCSV(
         rows=args.rows,
         cols=args.cols,
@@ -111,3 +116,4 @@ def cli():
         )
     csv.to_file(args.output)
     print(f'generated CSV file: {args.output}')
+    return None

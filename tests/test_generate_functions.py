@@ -87,6 +87,8 @@ class TestGenerateValue(unittest.TestCase):
     def test_generator_raised(self):
         all_value_types_sorted = [
             (3, 0.5),
+            (4, 0.5),
+            (5, 0.5),
         ]
         data_types = ["toke"]
         byte_size = 32

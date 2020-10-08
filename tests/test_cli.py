@@ -25,7 +25,11 @@ class TestCLI(unittest.TestCase):
         self.assertEqual(args.cols, 3)
         self.assertEqual(args.data_types, ["float"])
 
+        args = parse_args(["-m", "4", "-n", "3"])
+        self.assertEqual(args.rows, 4)
+        self.assertEqual(args.cols, 3)
+        self.assertEqual(args.data_types, ["integer"])
+
     def test_cli(self):
-        args = parse_args(["-m", "4", "-n", "3", "-d", "float"])
-        cli(args)
+        cli(["-m", "4", "-n", "3"])
         self.assertTrue(os.path.exists(self.test_file))
