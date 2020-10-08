@@ -1,6 +1,6 @@
 # RandCSV
 
-![Logo](./docs/_static/g5447.png)
+![Logo](https://scriptloom-cloud-randcsv.s3.amazonaws.com/g5447.png)
 
 Generate random CSVs.
 
