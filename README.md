@@ -6,6 +6,7 @@ Generate random CSVs.
 ![Lines of code](https://img.shields.io/tokei/lines/github/scriptloom/randcsv)
 ![GitHub repo size](https://img.shields.io/github/repo-size/scriptloom/randcsv)
 ![CircleCI](https://img.shields.io/circleci/build/github/scriptloom/randcsv/main)
+[![Documentation Status](https://readthedocs.org/projects/randcsv/badge/?version=latest)](https://randcsv.readthedocs.io/en/latest/?badge=latest)
 
 ## Purpose
 
@@ -201,3 +202,8 @@ flags begin with two (2) hyphens `--` and short-hand flags begin with one (1) hy
 
 If you would like to file a bug, or make a suggestion please use the
 [GitHub issue tracker](https://github.com/scriptloom/randcsv/issues).
+
+## Documentation
+
+You can find the source documented online at
+[Read the Docs](https://randcsv.readthedocs.io/en/latest/).
