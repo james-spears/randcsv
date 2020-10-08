@@ -180,11 +180,11 @@ flags begin with two (2) hyphens `--` and short-hand flags begin with one (1) hy
 
 * `--nan-freq`, `-a` Float (Optional. Default: `--nan-freq 0.0`)
   * Frequency of NaN values contained in desired CSV file. Example: `--nan-freq 0.25`, implies
-  25% of all the values in the CSV file will be `nan`.
+  25% of all the values in an infinite CSV file will be `nan`.
 
 * `--empty-freq`, `-e` Float (Optional. Default: `--empty-freq 0.0`)
   * Frequency of empty values contained in desired CSV file. Example: `--empty-freq 0.25`,
-  implies 25% of all the values in the CSV file will be `` (no value).
+  implies 25% of all the values in an infinite CSV file will be `` (no value).
 
 * `--index`, `-i` Boolean (Optional. Default: False)
   * Flag signaling whether the left most column should be a row index (ascending integer).
