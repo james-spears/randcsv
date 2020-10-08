@@ -16,6 +16,17 @@ This project is intended to provide:
 
 Where the purpose of 1. is further integration of `randcsv` with automated testing suits.
 
+## Python
+
+A modern (>=3.6) version of Python is required to use `randcsv`.
+
+## Features
+
+The `randcsv` logic uses the `secrets` library released with Python 3.6 to generate "random" values and
+to make "random" decisions. While the `secrets` library can be used to produce cryptographically secure
+random numbers, it is advised users review the source directly (./randcsv/value_generators.py) to ensure
+this particular implementation is suitable for their needs.
+
 ## PyPI Package
 
 ### Installation
@@ -31,7 +42,7 @@ The package is publicly hosted on PyPI under the name `randcsv`; you can install
 
 ### API
 
-The `randcsv` API is exposed via a single class definition, `RandCSV`. Example usage is shown below.
+The `randcsv` API consists of a single class definition, `RandCSV`. Example usage is shown below.
 
 ```python
 from randcsv import RandCSV
@@ -75,14 +86,19 @@ An example output is shown below:
 |8  |0.6864180672941529|16386949079868257309|nX-IUxLb-A8|
 |9  |                  |0.3868689478103007 |uZsUJyCLRU8|
 
+*n.b. The CSV shape will be M x N (`-m` x `-n`) **including** a title row and index column,
+if applicable.*
+
 ### Data type examples
 
-* (2, 1) and (2, 2) are examples of empty data types
-* (3, 2) and (2, 3) are examples of NaN data types
+* (2, 1) and (2, 2) are examples of empty values
+* (3, 2) and (2, 3) are examples of NaN values
 * (5, 1) and (8, 1) are examples of floating point data types [0, 1)
 * (7, 2) and (8, 3) are examples of token data types
 * (7, 1) and (6, 1) are examples of integer data types
  
+*n.b. The error associated with the frequency of value types has been empirically tested at
+< 10% for 10,000 randomly generated regular, NaN, and None (empty) values.*
 
 ## CLI
 
@@ -137,7 +153,8 @@ $ pipx install randcsv
 
 The randcsv command line tool makes available the following configuration parameters:
 
-***N.B. All commands are available via long-hand and short-hand flags. So-called long-hand flags begin with two (2) hyphens `--` and short-hand flags begin with one (1) hyphen `-`.***
+*n.b. All commands are available via long-hand and short-hand flags. So-called long-hand 
+flags begin with two (2) hyphens `--` and short-hand flags begin with one (1) hyphen `-`.*
 
 * `--rows`, `-m` Integer (Required)
   * Number of rows the desired CSV file contains.
@@ -149,13 +166,18 @@ The randcsv command line tool makes available the following configuration parame
   * Output file name.
 
 * `--data-types`, `-d` List (Optional. Default: `0.0`)
-  * Data types present in the desired CSV file. Supported data types are: str, int, float. This argument accepts multiple values. Example: `--data-types str int float`. If more than one data type is provided, the logic randomly selects one of the provided data types on a per-value basis.
+  * Data types present in the desired CSV file. Supported data types are: str, int, float.
+  This argument accepts multiple values. Example: `--data-types str int float`. If more than
+  one data type is provided, the logic randomly selects one of the provided data types on a
+  per-value basis.
 
-* `--nan-values`, `-a` Float (Optional. Default: `--nan-values 0.0`)
-  * Frequency of NaN values contained in desired CSV file. Example: `--nan-values 0.25`, implies 25% of all the values in the CSV file will be `nan`.
+* `--nan-freq`, `-a` Float (Optional. Default: `--nan-freq 0.0`)
+  * Frequency of NaN values contained in desired CSV file. Example: `--nan-freq 0.25`, implies
+  25% of all the values in the CSV file will be `nan`.
 
-* `--empty-values`, `-e` Float (Optional. Default: `--empty-values 0.0`)
-  * Frequency of empty values contained in desired CSV file. Example: `--empty-values 0.25`, implies 25% of all the values in the CSV file will be `` (no value).
+* `--empty-freq`, `-e` Float (Optional. Default: `--empty-freq 0.0`)
+  * Frequency of empty values contained in desired CSV file. Example: `--empty-freq 0.25`,
+  implies 25% of all the values in the CSV file will be `` (no value).
 
 * `--index`, `-i` Boolean (Optional. Default: False)
   * Flag signaling whether the left most column should be a row index (ascending integer).
@@ -166,3 +188,8 @@ The randcsv command line tool makes available the following configuration parame
 * `--byte-size`, `-b` Integer (Optional. Default: 8)
   * Number of bytes used to generate the random values. Increasing the byte size will
   increase the size of the set of possible random values.
+
+
+## Issue tracking
+
+If you find a bug or would like to 
