@@ -1,5 +1,7 @@
 # RandCSV
 
+![Logo](./docs/_static/g5447.png)
+
 Generate random CSVs.
 
 [![License](https://poser.pugx.org/ali-irawan/xtra/license.svg)](https://github.com/scriptloom/randcsv/blob/dev/LISCENSE.txt)
