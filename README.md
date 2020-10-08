@@ -192,4 +192,5 @@ flags begin with two (2) hyphens `--` and short-hand flags begin with one (1) hy
 
 ## Issue tracking
 
-If you find a bug or would like to 
+If you file a bug or make a suggestion please use the
+[GitHub issue tracker](https://github.com/scriptloom/randcsv/issues).
