@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="randcsv",
-    version="0.0.8",
+    version="0.0.9",
     author="James W. Spears",
     author_email="james.w.spears@gmail.com",
     description="Generate random CSVs.",

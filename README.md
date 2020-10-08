@@ -39,9 +39,9 @@ The package is publicly hosted on PyPI under the name `randcsv`; you can install
 ```text
 $ pip install randcsv
 Collecting randcsv
-  Downloading randcsv-0.0.7-py3-none-any.whl (10 kB)
+  Downloading randcsv-0.0.9-py3-none-any.whl (10 kB)
 Installing collected packages: randcsv
-Successfully installed randcsv-0.0.7
+Successfully installed randcsv-0.0.9
 ```
 
 ### API
@@ -150,7 +150,7 @@ Otherwise pipx is ready to go! ✨ 🌟 ✨
 
 ```text
 $ pipx install randcsv
-  installed package randcsv 0.0.7, Python 3.8.3
+  installed package randcsv 0.0.9, Python 3.8.3
   These apps are now globally available
     - randcsv
 done! ✨ 🌟 ✨
