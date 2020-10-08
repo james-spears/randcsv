@@ -172,7 +172,7 @@ flags begin with two (2) hyphens `--` and short-hand flags begin with one (1) hy
 * `--cols`, `n` Integer (Required)
   * Number of columns the desired CSV file contains.
 
-* `--output`, `-o` String (Optional. Default: `--output test.csv`)
+* `--output`, `-o` String (Optional. Default: `--output rand.csv`)
   * Output file name.
 
 * `--data-types`, `-d` List (Optional. Default: `--data-types integer`)
