@@ -2,7 +2,7 @@
 
 Generate random CSVs.
 
-[![License](https://poser.pugx.org/ali-irawan/xtra/license.svg)](https://poser.pugx.org/ali-irawan/xtra/license.svg)
+[![License](https://poser.pugx.org/ali-irawan/xtra/license.svg)](https://github.com/scriptloom/randcsv/blob/dev/LISCENSE.txt)
 ![Lines of code](https://img.shields.io/tokei/lines/github/scriptloom/randcsv)
 ![GitHub repo size](https://img.shields.io/github/repo-size/scriptloom/randcsv)
 ![CircleCI](https://img.shields.io/circleci/build/github/scriptloom/randcsv/main)
