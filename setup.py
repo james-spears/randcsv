@@ -4,8 +4,8 @@ with open("README.md", "r") as fh:
     long_description = fh.read()
 
 setuptools.setup(
-    name="randcsv-jameone",
-    version="0.0.3",
+    name="randcsv",
+    version="0.0.6",
     author="James W. Spears",
     author_email="james.w.spears@gmail.com",
     description="Generate random CSVs.",

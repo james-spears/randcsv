@@ -23,9 +23,10 @@ A modern (>=3.6) version of Python is required to use `randcsv`.
 ## Features
 
 The `randcsv` logic uses the `secrets` library released with Python 3.6 to generate "random" values and
-to make "random" decisions. While the `secrets` library can be used to produce cryptographically secure
-random numbers, it is advised users review the source directly (./randcsv/value_generators.py) to ensure
-this particular implementation is suitable for their needs.
+make "random" decisions. While the `secrets` library can be used to produce cryptographically secure
+random numbers, it is advised users review the source directly (pertinent functions found 
+[here](https://github.com/scriptloom/randcsv/blob/main/randcsv/value_generators.py)) to ensure this
+particular implementation is suitable for their needs when cryptographic security is a concern.
 
 ## PyPI Package
 
@@ -36,8 +37,11 @@ The package is publicly hosted on PyPI under the name `randcsv`; you can install
 1) Install `randcsv`.
 
 ```text
-   $ pip install randcsv
-   ...
+$ pip install randcsv
+Collecting randcsv
+  Downloading randcsv-0.0.7-py3-none-any.whl (10 kB)
+Installing collected packages: randcsv
+Successfully installed randcsv-0.0.7
 ```
 
 ### API
@@ -146,7 +150,10 @@ Otherwise pipx is ready to go! ✨ 🌟 ✨
 
 ```text
 $ pipx install randcsv
-...
+  installed package randcsv 0.0.7, Python 3.8.3
+  These apps are now globally available
+    - randcsv
+done! ✨ 🌟 ✨
 ```
 
 ### Command line arguments
@@ -192,5 +199,5 @@ flags begin with two (2) hyphens `--` and short-hand flags begin with one (1) hy
 
 ## Issue tracking
 
-If you file a bug or make a suggestion please use the
+If you would like to file a bug, or make a suggestion please use the
 [GitHub issue tracker](https://github.com/scriptloom/randcsv/issues).
