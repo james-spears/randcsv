@@ -29,20 +29,21 @@ def generate_float(num_of_bytes):
     if num_of_bytes <= 0:
         raise ValueError("number of decimal places must be positive")
     exclusive_upper_bound = 2 ** (num_of_bytes * 8)
+
     return secrets.randbelow(exclusive_upper_bound) / exclusive_upper_bound
 
 
 def generate_token(num_of_bytes):
     """Generates a cryptographically secure, random (URL safe) token.
 
-    :param num_of_bytes: number of characters
+    :param num_of_bytes: number of bytes
     :type num_of_bytes: int
     :return: random token
     :rtype: str
     """
 
     if num_of_bytes <= 0:
-        raise ValueError("number of characters must be positive")
+        raise ValueError("number of bytes must be positive")
 
     return secrets.token_urlsafe(num_of_bytes)
 
@@ -87,9 +88,9 @@ def generate_value(all_value_types_sorted, data_types, byte_size):
     for item in all_value_types_sorted:
         right_boundary = item[1] + left_boundary
         if left_boundary <= generate_number < right_boundary:
-            # 0 = regular_values,
-            # 1 = nan,
-            # 2 = None
+            # 0 = value
+            # 1 = nan
+            # 2 = empty
             if item[0] == 0:
                 # this is a regular number, so randomly select one
                 generator = generator_factory(secrets.choice(data_types))
@@ -103,7 +104,7 @@ def generate_value(all_value_types_sorted, data_types, byte_size):
             else:
                 # this must be an empty value
                 raise ValueError(
-                    'value must be either NaN, "empty", or a valid data type (regular value)'
+                    'value must be either nan, empty, or a valid data type'
                 )
 
         left_boundary = right_boundary

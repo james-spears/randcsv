@@ -89,18 +89,14 @@ def parse_args(*args):
         default=8,
         help='Character length of the individual random values.'
     )
-
-    if args is not None:
-        return mkcsv_parser.parse_args(*args)
-    # pipx returns here
-    return mkcsv_parser.parse_args()
+    return mkcsv_parser.parse_args(*args)
 
 
-def cli(args=None):
+def cli(*args):
     """CLI entry point.
     """
-    if args is not None:
-        args = parse_args(args)
+    if len(args):
+        args = parse_args(*args)
     else:
         # pipx returns here
         args = parse_args()

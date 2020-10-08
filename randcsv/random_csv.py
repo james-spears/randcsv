@@ -67,8 +67,14 @@ class RandCSV:
                             ) for _ in range(self.cols)])
 
     def to_file(self, file_name):
+        """Save the data to local file system.
+
+        :param file_name: name of output file
+        :return: None
+        """
         with open(file_name, 'w+', newline='') as csvfile:
             csvwriter = csv.writer(
                 csvfile, delimiter=',', quotechar='|', quoting=csv.QUOTE_MINIMAL)
             for row in range(len(self.data)):
                 csvwriter.writerow(self.data[row])
+        return None
