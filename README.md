@@ -175,7 +175,7 @@ flags begin with two (2) hyphens `--` and short-hand flags begin with one (1) hy
 * `--output`, `-o` String (Optional. Default: `--output test.csv`)
   * Output file name.
 
-* `--data-types`, `-d` List (Optional. Default: `0.0`)
+* `--data-types`, `-d` List (Optional. Default: `--data-types integer`)
   * Data types present in the desired CSV file. Supported data types are: str, int, float.
   This argument accepts multiple values. Example: `--data-types float integer token`, or any
   combination thereof. If more than one data type is provided, the logic randomly selects one
@@ -189,13 +189,13 @@ flags begin with two (2) hyphens `--` and short-hand flags begin with one (1) hy
   * Frequency of empty values contained in desired CSV file. Example: `--empty-freq 0.25`,
   implies 25% of all the values in an infinite CSV file will be `` (no value).
 
-* `--index`, `-i` Boolean (Optional. Default: False)
+* `--index`, `-i` Boolean (Optional. Default: *omit flag*)
   * Flag signaling whether the left most column should be a row index (ascending integer).
 
-* `--title`, `-t` Boolean (Optional. Default: False)
+* `--title`, `-t` Boolean (Optional. Default: *omit flag*)
   * Flag signaling whether the top most row should be a column index (ascending integer).
 
-* `--byte-size`, `-b` Integer (Optional. Default: 8)
+* `--byte-size`, `-b` Integer (Optional. Default: `--byte-size 8`)
   * Number of bytes used to generate the random values. Increasing the byte size will
   increase the size of the set of possible random values.
 
