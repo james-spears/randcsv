@@ -1,6 +1,7 @@
 from __future__ import print_function
 import argparse
 from .random_csv import RandCSV
+from multiprocessing import cpu_count
 
 
 def parse_args(*args):
@@ -89,6 +90,15 @@ def parse_args(*args):
         default=8,
         help='Character length of the individual random values.'
     )
+    mkcsv_parser.add_argument(
+        '--max-procs',
+        '-p',
+        action='store',
+        type=int,
+        required=False,
+        default=cpu_count(),
+        help='Number of processes allocated for random value generation.'
+    )
     return mkcsv_parser.parse_args(*args)
 
 
@@ -109,6 +119,7 @@ def cli(*args):
         empty_freq=args.empty_freq,
         index_col=args.index_col,
         title_row=args.title_row,
+        max_procs=args.max_procs
         )
     csv.to_file(args.output)
     print(f'generated CSV file: {args.output}')

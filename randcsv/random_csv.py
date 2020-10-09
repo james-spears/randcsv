@@ -1,5 +1,6 @@
 import csv
 from operator import itemgetter
+from multiprocessing import Pool, cpu_count
 
 from . import value_generators as vg
 from . import data_type as dt
@@ -19,6 +20,7 @@ class RandCSV:
         empty_freq=.0,
         index_col=False,
         title_row=False,
+        max_procs=None
     ):
         if data_types is None:
             data_types = [dt.DataType.integer.value]
@@ -45,26 +47,39 @@ class RandCSV:
         all_value_types = [(0, regular_values), (1, self.nan_freq), (2, self.empty_freq)]
         all_value_types_sorted = sorted(all_value_types, key=itemgetter(1))
 
-        self.data = []
-        for row in range(self.rows):
-            if row == 0 and self.title_row:
-                self.data.append([str(col) for col in range(self.cols)])
-            else:
-                if self.index_col:
-                    self.data.append(
-                        [str(row)] 
-                        + [vg.generate_value(
-                            all_value_types_sorted,
-                            self.data_types,
-                            self.byte_size
-                            ) for _ in range(1, self.cols)])
-                else:
-                    self.data.append(
-                        [vg.generate_value(
-                            all_value_types_sorted,
-                            self.data_types,
-                            self.byte_size
-                            ) for _ in range(self.cols)])
+        num_of_cpus = cpu_count()
+        # The default value of max_procs will be the system cpu count.
+        if max_procs is None:
+            self.max_procs = num_of_cpus
+        else:
+            # In the case the user enters a negative number,
+            # raise a value error.
+            if max_procs <= 0:
+                raise ValueError("--max-procs must be positive")
+            # if max_procs > num_of_cpus:
+            #     self.max_procs = num_of_cpus
+            # else:
+            self.max_procs = max_procs
+
+        # If the machine has only 1 cpu, or the user has set
+        # max_procs to 1 then we do not want to pool processes,
+        # just run in the current thread.
+        if self.max_procs < 2:
+            self.data = []
+            for row in range(self.rows):
+                row_values = self.generate_row(row, all_value_types_sorted)
+                self.data.append(row_values)
+        # Otherwise, by this point, the machine
+        else:
+            with Pool(processes=self.max_procs) as pool:
+                arguments = [(row, all_value_types_sorted) for row in range(self.rows)]
+                p = pool.starmap(
+                    self.generate_row,
+                    arguments,
+                )
+                pool.close()
+
+            self.data = p
 
     def to_file(self, file_name):
         """Save the data to local file system.
@@ -78,3 +93,22 @@ class RandCSV:
             for row in range(len(self.data)):
                 csvwriter.writerow(self.data[row])
         return None
+
+    def generate_row(self, row, all_value_types_sorted):
+        if row == 0 and self.title_row:
+            return [str(col) for col in range(self.cols)]
+        else:
+            if self.index_col:
+                return [str(row)] + [vg.generate_value(
+                        all_value_types_sorted,
+                        self.data_types,
+                        self.byte_size
+                    ) for _ in range(1, self.cols)]
+            else:
+                return [
+                    vg.generate_value(
+                        all_value_types_sorted,
+                        self.data_types,
+                        self.byte_size
+                    ) for _ in range(self.cols)
+                ]

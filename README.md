@@ -202,6 +202,21 @@ flags begin with two (2) hyphens `--` and short-hand flags begin with one (1) hy
   * Number of bytes used to generate the random values. Increasing the byte size will
   increase the size of the set of possible random values.
 
+* `--max-procs`, `-p` Integer (Optional. Default: `--max-procs multiprocessing.cpu_count()`)
+  * Number of processes allocated for random value generation.
+  The default value is set by calling the `cpu_count()` function from the `multiprocessing`
+  library. This value determines the size of the pool executor in all cases except
+  `--max-procs 1`, in which case the random values are generated in the parent process. 
+  
+## Performance
+
+|log10(n)|10      |20      |30      |40      |
+|------|--------|--------|--------|--------|
+|0.0   |0.000242|0.000443|0.000661|0.001251|
+|1.0   |0.002272|0.004451|0.006743|0.009026|
+|2.0   |0.022743|0.044277|0.070566|0.089093|
+|3.0   |0.223108|0.439848|0.652984|0.874792|
+
 
 ## Issue tracking
 

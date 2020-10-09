@@ -1,16 +1,17 @@
 from math import nan
 import secrets
 
+from typing import Callable
 from . import data_type as dt
 
 
-def generate_integer(num_of_bytes):
+def generate_integer(num_of_bytes: int) -> int:
     """Generates a cryptographically secure, random integer.
 
     :param num_of_bytes: number of bytes
     :type num_of_bytes: int
     :return: random integer
-    :rtype: number
+    :rtype: integer
     """
     if num_of_bytes <= 0:
         raise ValueError("number of digits must be positive")
@@ -18,7 +19,7 @@ def generate_integer(num_of_bytes):
     return secrets.randbits(num_of_bytes * 8)
 
 
-def generate_float(num_of_bytes):
+def generate_float(num_of_bytes: int) -> float:
     """Generates a cryptographically secure, random floating point.
 
     :param num_of_bytes: number of decimal places
@@ -33,7 +34,7 @@ def generate_float(num_of_bytes):
     return secrets.randbelow(exclusive_upper_bound) / exclusive_upper_bound
 
 
-def generate_token(num_of_bytes):
+def generate_token(num_of_bytes: int) -> str:
     """Generates a cryptographically secure, random (URL safe) token.
 
     :param num_of_bytes: number of bytes
@@ -48,7 +49,7 @@ def generate_token(num_of_bytes):
     return secrets.token_urlsafe(num_of_bytes)
 
 
-def generator_factory(data_type):
+def generator_factory(data_type: str) -> Callable:
     """Factory function, returns the result of correct value generator.
 
     :param data_type: data type of value
