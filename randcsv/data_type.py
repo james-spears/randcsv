@@ -8,5 +8,5 @@ class DataType(Enum):
     integer = 'integer'
     floating_point = 'float'
 
-    def __str__(self):
+    def __str__(self) -> str:
         return self.value

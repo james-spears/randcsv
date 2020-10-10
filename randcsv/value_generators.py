@@ -1,7 +1,7 @@
 from math import nan
 import secrets
 
-from typing import Callable
+from typing import Callable, Union, Tuple
 from . import data_type as dt
 
 
@@ -70,7 +70,7 @@ def generator_factory(data_type: str) -> Callable:
         )
 
 
-def generate_value(all_value_types_sorted, data_types, byte_size):
+def generate_value(all_value_types_sorted: Tuple[Tuple], data_types, byte_size) -> Union[float, int, str, None]:
     """Generic value generator.
 
     :param all_value_types_sorted: list of tuples containing value types sorted by frequency
@@ -86,6 +86,7 @@ def generate_value(all_value_types_sorted, data_types, byte_size):
     numerator = secrets.randbelow(100000000)
     generate_number = numerator / 100000000
     left_boundary = 0
+    value: Union[float, int, str, None] = None
     for item in all_value_types_sorted:
         right_boundary = item[1] + left_boundary
         if left_boundary <= generate_number < right_boundary:
@@ -95,17 +96,17 @@ def generate_value(all_value_types_sorted, data_types, byte_size):
             if item[0] == 0:
                 # this is a regular number, so randomly select one
                 generator = generator_factory(secrets.choice(data_types))
-                return generator(byte_size)
+                value = generator(byte_size)
             elif item[0] == 1:
                 # this is a NaN value
-                return nan
+                value = nan
             elif item[0] == 2:
                 # this is an empty value
-                return None
+                pass
             else:
                 # this must be an empty value
                 raise ValueError(
                     'value must be either nan, empty, or a valid data type'
                 )
-
         left_boundary = right_boundary
+    return value

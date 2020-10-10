@@ -1,6 +1,7 @@
 import csv
 from operator import itemgetter
 from multiprocessing import Pool, cpu_count
+from typing import Union, List, Tuple
 
 from . import value_generators as vg
 from . import data_type as dt
@@ -81,7 +82,7 @@ class RandCSV:
 
             self.data = p
 
-    def to_file(self, file_name):
+    def to_file(self, file_name) -> None:
         """Save the data to local file system.
 
         :param file_name: name of output file
@@ -94,21 +95,25 @@ class RandCSV:
                 csvwriter.writerow(self.data[row])
         return None
 
-    def generate_row(self, row, all_value_types_sorted):
-        if row == 0 and self.title_row:
+    def generate_row(self, row_num: int, all_value_types_sorted: Tuple[Tuple]) -> List[Union[float, int, str, None]]:
+        if row_num == 0 and self.title_row:
             return [str(col) for col in range(self.cols)]
         else:
             if self.index_col:
-                return [str(row)] + [vg.generate_value(
+                row: List[Union[float, int, str, None]] = [str(row_num)]
+                row += [
+                    vg.generate_value(
                         all_value_types_sorted,
                         self.data_types,
                         self.byte_size
-                    ) for _ in range(1, self.cols)]
+                    ) for _ in range(1, self.cols)
+                ]
             else:
-                return [
+                row = [
                     vg.generate_value(
                         all_value_types_sorted,
                         self.data_types,
                         self.byte_size
                     ) for _ in range(self.cols)
                 ]
+        return row

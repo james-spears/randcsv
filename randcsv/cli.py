@@ -4,7 +4,7 @@ from .random_csv import RandCSV
 from multiprocessing import cpu_count
 
 
-def parse_args(*args):
+def parse_args(*args) -> None:
     """Argument parser.
     """
     # Create the parser.

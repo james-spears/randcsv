@@ -10,3 +10,4 @@ main.py
 coverage_html_report
 rand.csv
 randcsv.egg-info
+*.png

@@ -48,6 +48,65 @@ def least_squares(x, y):
     return m, b
 
 
+def run_optimal(row_nums, col_nums, byte_nums, stepper, data_types):
+    """Runs the test.
+
+    :return: experimental results
+    """
+    results = {}
+    for data_type in data_types:
+        results[str(data_type)] = {}
+        for byte_num in byte_nums:
+            results[str(data_type)][byte_num] = {}
+            for row_num in row_nums:
+                for col_num in col_nums:
+                    iteration_num = row_num * col_num
+                    proc_num = stepper(iteration_num)
+                    print(proc_num)
+                    results[str(data_type)][byte_num][iteration_num] = {}
+                    measurement = take_measurement(
+                        RandCSV,
+                        rows=row_num,
+                        cols=col_num,
+                        byte_size=byte_num,
+                        data_types=data_type,
+                        max_procs=proc_num
+                    )
+                    exec_times = [round(item[1] * 10 ** 3, 3) for item in measurement]
+                    avg_exec = sum(exec_times) / len(exec_times)
+                    avg_exec = round(avg_exec, 3)
+                    print(avg_exec)
+                    var = sum([(exec_time - avg_exec) ** 2 for exec_time in exec_times]) / (len(exec_times) - 1)
+                    std_dev = math.sqrt(var)
+                    std_dev = round(std_dev, 3)
+                    var = round(var, 3)
+
+                    results[str(data_type)][byte_num][iteration_num]['exec_times'] = \
+                        exec_times
+                    results[str(data_type)][byte_num][iteration_num]['avg_exec'] = \
+                        avg_exec
+                    results[str(data_type)][byte_num][iteration_num]['var'] = \
+                        var
+                    results[str(data_type)][byte_num][iteration_num]['std_dev'] = \
+                        std_dev
+                    results[str(data_type)][byte_num][iteration_num]['proc_num'] = \
+                        proc_num
+
+            experiment = [
+                (key, val['avg_exec']) for key, val in results[str(data_type)][byte_num].items()
+            ]
+            iterations, execution_time = zip(*experiment)
+            m, b = least_squares(iterations, execution_time)
+            m = round(m, 6)
+            b = round(b, 6)
+            results[str(data_type)][byte_num]['slope'] = m
+            results[str(data_type)][byte_num]['y_int'] = b
+            results[str(data_type)][byte_num]['int'] = \
+                (0.5 * m * max(iterations) ** 2) - (0.5 * m * min(iterations) ** 2)
+
+    return results
+
+
 def run_experiment(row_nums, col_nums, byte_nums, proc_nums, data_types):
     """Runs the test.
 
@@ -206,7 +265,7 @@ def step_function_generator(thread_break_points):
 
 
 if __name__ == '__main__':
-    ROW_NUMS = [10, 100]
+    ROW_NUMS = [10, 100, 1000, 10000]
     COL_NUMS = [10, 20]
     BYTE_NUMS = [8]
     PROC_NUMS = [i + 1 for i in range(cpu_count())]
@@ -231,16 +290,25 @@ if __name__ == '__main__':
     print(stepper(100000))
 
     fig, ax = plt.subplots(figsize=(20, 10))
-    num_of_iterations = [item[0] * item[1] for item in product(ROW_NUMS, COL_NUMS)]
-    iteration_range = np.arange(0, max(num_of_iterations), 100)
+    iterations_list = [item[0] * item[1] for item in product(ROW_NUMS, COL_NUMS)]
+    iteration_range = np.arange(0, max(iterations_list), 100)
     optimal_thread = [stepper(item) for item in iteration_range]
     ax.set_yticks(PROC_NUMS)
-    ax.set_ylabel("Optimal no. threads in pool")
+    ax.set_ylabel("No. threads in pool")
     ax.set_xlabel("No. iterations")
     plt.step(iteration_range, optimal_thread, label='optimal threads')
     ax.set_title("Optimal Threads for Given Iteration.")
     plt.savefig('stepper.png')
     plt.show()
+
+
+    res = run_optimal(
+        row_nums=ROW_NUMS,
+        col_nums=COL_NUMS,
+        byte_nums=BYTE_NUMS,
+        stepper=stepper,
+        data_types=DATA_TYPES,
+    )
 
     max_iterations = max(ROW_NUMS) * max(COL_NUMS)
     avg_execution_time = [item[3] / max_iterations for item in exp_lines]
@@ -252,3 +320,5 @@ if __name__ == '__main__':
     ax.set_title("Avg. Execution Time (ms.) by No. Threads in Pool.")
     plt.savefig('comparison.png')
     plt.show()
+
+    print(res[str(DATA_TYPES[0])][BYTE_NUMS[0]]['int'] / max_iterations)
