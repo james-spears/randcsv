@@ -1,6 +1,7 @@
 import math
 from datetime import datetime
-from itertools import combinations
+from itertools import combinations, product
+from multiprocessing import cpu_count
 
 import matplotlib.pyplot as plt
 import numpy as np
@@ -53,6 +54,7 @@ def run_experiment(row_nums, col_nums, byte_nums, proc_nums, data_types):
     :return: experimental results
     """
     results = {}
+    total_tests = len(row_nums) * len(col_nums)
     fig, ax = plt.subplots(2, 2, figsize=(20, 10))
     for data_type in data_types:
         results[str(data_type)] = {}
@@ -98,22 +100,24 @@ def run_experiment(row_nums, col_nums, byte_nums, proc_nums, data_types):
                 b = round(b, 6)
                 results[str(data_type)][byte_num][proc_num]['slope'] = m
                 results[str(data_type)][byte_num][proc_num]['y_int'] = b
+                results[str(data_type)][byte_num][proc_num]['int'] = \
+                    (0.5 * m * max(iterations) ** 2) - (0.5 * m * min(iterations) ** 2)
                 ax[0][0].plot(
-                    iterations, execution_time, label=f'-d {" ".join(data_type)} -b {byte_num} -p {proc_num}')
+                    iterations[:3], execution_time[:3], label=f'-d {" ".join(data_type)} -b {byte_num} -p {proc_num}')
                 ax[0][1].plot(
-                    iterations[:9], execution_time[:9], label=f'-d {" ".join(data_type)} -b {byte_num} -p {proc_num}')
-                x_values = np.linspace(min(iterations), max(iterations), 100)
+                    iterations[:3], execution_time[:3], label=f'-d {" ".join(data_type)} -b {byte_num} -p {proc_num}')
+                x_values = np.linspace(min(iterations), max(iterations), total_tests)
                 y_values = m * x_values + b
                 ax[1][0].plot(
-                    x_values, y_values, label=f'-d {" ".join(data_type)} -b {byte_num} -p {proc_num}')
+                    x_values[:3], y_values[:3], label=f'-d {" ".join(data_type)} -b {byte_num} -p {proc_num}')
                 ax[1][1].plot(
-                    x_values[:10], y_values[:10], label=f'-d {" ".join(data_type)} -b {byte_num} -p {proc_num}')
+                    x_values[:3], y_values[:3], label=f'-d {" ".join(data_type)} -b {byte_num} -p {proc_num}')
 
     lines = []
     for data_type_key, data_type_val in results.items():
         for byte_num_key, byte_num_val in data_type_val.items():
             for proc_num_key, proc_num_val in byte_num_val.items():
-                lines.append((proc_num_val['slope'], proc_num_val['y_int'], proc_num_key))
+                lines.append((proc_num_val['slope'], proc_num_val['y_int'], proc_num_key, proc_num_val['int']))
 
     intersection_points = []
     line_pairs = combinations(lines, 2)
@@ -143,6 +147,11 @@ def run_experiment(row_nums, col_nums, byte_nums, proc_nums, data_types):
         ylabel='Execution Time ($s \cdot 10^{-3}$)',
         title='Lease Squares Approximation.'
     )
+    ax[0][0].grid()
+    ax[1][0].grid()
+    ax[0][0].legend(title="Arguments", bbox_to_anchor=(1, 1), loc='upper left')
+    ax[1][0].legend(title="Arguments", bbox_to_anchor=(1, 1), loc='upper left')
+
     ax[0][1].set(
         xlabel='No. Iterations',
         ylabel='Execution Time ($s \cdot 10^{-3}$)',
@@ -153,19 +162,15 @@ def run_experiment(row_nums, col_nums, byte_nums, proc_nums, data_types):
         ylabel='Execution Time ($s \cdot 10^{-3}$)',
         title='Lease Squares Approximation.'
     )
-    ax[0][0].grid()
-    ax[1][0].grid()
-    ax[0][0].legend(title="Arguments")
-    ax[1][0].legend(title="Arguments")
     ax[0][1].grid()
     ax[1][1].grid()
-    ax[0][1].legend(title="Arguments")
-    ax[1][1].legend(title="Arguments")
+    ax[0][1].legend(title="Arguments", bbox_to_anchor=(1, 1), loc='upper left')
+    ax[1][1].legend(title="Arguments", bbox_to_anchor=(1, 1), loc='upper left')
     fig.tight_layout()
     plt.savefig('results.png')
     plt.show()
 
-    return zip(intersection_points, step_function)
+    return zip(intersection_points, step_function), lines
 
 
 def find_intersections_point(lp):
@@ -178,19 +183,72 @@ def find_intersections_point(lp):
     b_0 = line_0[1]
     b_1 = line_1[1]
 
-    x = (b_1 - b_0) / (m_0 - m_1)
+    try:
+        x = (b_1 - b_0) / (m_0 - m_1)
+    except ZeroDivisionError:
+        x = 0
+
     y = m_0 * x + b_0
 
     return x, y
 
 
+def step_function_generator(thread_break_points):
+    def step_function(num_of_iterations):
+        thread_count = 1
+        for thread_break_point in thread_break_points:
+            if num_of_iterations > thread_break_point[0][0]:
+                thread_count = thread_break_point[1]
+
+        return thread_count
+
+    return step_function
+
+
 if __name__ == '__main__':
-    sf = run_experiment(
-        row_nums=[1, 10, 100],
-        col_nums=[10, 20, 30],
-        byte_nums=[8],
-        proc_nums=[1, 2, 4, 8, 16],
-        data_types=[['integer']],
+    ROW_NUMS = [10, 100]
+    COL_NUMS = [10, 20]
+    BYTE_NUMS = [8]
+    PROC_NUMS = [i + 1 for i in range(cpu_count())]
+    print(PROC_NUMS)
+    DATA_TYPES = [['integer']]
+    sf, exp_lines = run_experiment(
+        row_nums=ROW_NUMS,
+        col_nums=COL_NUMS,
+        byte_nums=BYTE_NUMS,
+        proc_nums=PROC_NUMS,
+        data_types=DATA_TYPES,
     )
 
-    print(list(sf))
+    sf_list = list(sf)
+    print(sf_list)
+    print(exp_lines)
+    stepper = step_function_generator(sf_list)
+
+    print(stepper(100))
+    print(stepper(1000))
+    print(stepper(10000))
+    print(stepper(100000))
+
+    fig, ax = plt.subplots(figsize=(20, 10))
+    num_of_iterations = [item[0] * item[1] for item in product(ROW_NUMS, COL_NUMS)]
+    iteration_range = np.arange(0, max(num_of_iterations), 100)
+    optimal_thread = [stepper(item) for item in iteration_range]
+    ax.set_yticks(PROC_NUMS)
+    ax.set_ylabel("Optimal no. threads in pool")
+    ax.set_xlabel("No. iterations")
+    plt.step(iteration_range, optimal_thread, label='optimal threads')
+    ax.set_title("Optimal Threads for Given Iteration.")
+    plt.savefig('stepper.png')
+    plt.show()
+
+    max_iterations = max(ROW_NUMS) * max(COL_NUMS)
+    avg_execution_time = [item[3] / max_iterations for item in exp_lines]
+    fig, ax = plt.subplots(figsize=(20, 10))
+    ax.bar(PROC_NUMS, avg_execution_time)
+    ax.set_xticks(PROC_NUMS)
+    ax.set_xlabel("No. Threads in pool")
+    ax.set_ylabel("Avg. execution time (ms.)")
+    ax.set_title("Avg. Execution Time (ms.) by No. Threads in Pool.")
+    plt.savefig('comparison.png')
+    plt.show()
